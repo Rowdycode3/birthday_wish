@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>🎂 Funny Birthday Wishes</title>
+    <title>Happy Birthday Rose</title>
     <meta
       name="description"
       content="Hilarious teasing birthday wishes guaranteed to make your friends snort-laugh."
@@ -185,17 +185,20 @@
     </audio>
 
     <script>
-      // Wait for a user gesture (click) to unmute
-      document.addEventListener(
+  window.addEventListener("load", () => {
+    const audio = document.getElementById("bgMusic");
+    audio.muted = false;
+    audio.play().catch(() => {
+      document.body.addEventListener(
         "click",
         () => {
-          const audio = document.getElementById("bgMusic");
-          audio.muted = false; // unmute
-          audio.play(); // ensure playback
+          audio.play();
         },
-        { once: true },
+        { once: true }
       );
-    </script>
+    });
+  });
+</script>
 
     <script>
       const wishes = [
@@ -274,4 +277,5 @@
     </script>
   </body>
 </html>
+
 
