@@ -1,363 +1,292 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Happy Birthday Rose</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta
-    name="description"
-    content="Hilarious teasing birthday wishes guaranteed to make your friends snort-laugh."
-  />
+<title>Happy Birthday Rose</title>
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=Fredoka+One&display=swap"
-    rel="stylesheet"
-  />
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=Fredoka+One&display=swap" rel="stylesheet">
 
-  <style>
+<style>
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+body{
+margin:0;
+font-family:'Nunito',sans-serif;
+background:linear-gradient(135deg,#fff4c3,#ffe3e3);
+color:#4a0d2d;
+text-align:center;
+overflow-x:hidden;
+}
 
-    body {
-      font-family: "Nunito", sans-serif;
-      background: linear-gradient(135deg, #fff4c3, #ffe3e3);
-      color: hsl(340, 60%, 20%);
-      min-height: 100vh;
-      overflow-x: hidden;
-      position: relative;
-      transition: background 0.5s;
-    }
+/* stage system */
 
-    /* Confetti */
+.stage{
+display:none;
+min-height:100vh;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+padding:40px;
+}
 
-    .confetti-container {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: 0;
-    }
+.stage.active{
+display:flex;
+}
 
-    .confetti-piece {
-      position: absolute;
-      border-radius: 3px;
-      animation: confetti-fall linear infinite;
-    }
+/* intro */
 
-    @keyframes confetti-fall {
+.intro-text{
+font-size:40px;
+font-weight:900;
+animation:fadeUp 2s;
+}
 
-      0% {
-        transform: translateY(-100vh) rotate(0deg);
-        opacity: 1;
-      }
+/* button */
 
-      100% {
-        transform: translateY(100vh) rotate(720deg);
-        opacity: 0;
-      }
-    }
+.next-btn{
+margin-top:40px;
+padding:12px 25px;
+font-size:18px;
+background:#ff4da6;
+border:none;
+border-radius:8px;
+color:white;
+cursor:pointer;
+}
 
-    /* Float animation */
+/* cake */
 
-    @keyframes float {
+.cake{
+width:280px;
+border-radius:20px;
+margin-top:30px;
+animation:float 3s infinite ease-in-out;
+}
 
-      0%,100% {
-        transform: translateY(0) rotate(0deg);
-      }
+/* wishes */
 
-      50% {
-        transform: translateY(-20px) rotate(5deg);
-      }
-    }
+.wishes{
+max-width:700px;
+display:grid;
+gap:20px;
+margin-top:40px;
+}
 
-    .main {
-      position: relative;
-      z-index: 10;
-      max-width: 48rem;
-      margin: 0 auto;
-      padding: 3rem 1rem;
-      text-align: center;
-    }
+.card{
+background:white;
+padding:20px;
+border-radius:15px;
+font-weight:700;
+box-shadow:0 10px 20px rgba(0,0,0,0.1);
+}
 
-    h1 {
-      font-family: "Fredoka One", cursive;
-      font-size: clamp(2.5rem, 8vw, 4.5rem);
-      color: hsl(340, 82%, 55%);
-      margin-bottom: 0.5rem;
-      text-shadow: 2px 2px 5px rgba(0,0,0,0.2);
-    }
+/* confetti */
 
-    .subtitle {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: hsl(340, 30%, 45%);
-      margin-bottom: 2rem;
-    }
+.confetti{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+pointer-events:none;
+}
 
-    .cake-wrapper {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 2rem;
-    }
+.confetti div{
+position:absolute;
+width:8px;
+height:12px;
+animation:fall linear infinite;
+}
 
-    .cake-wrapper img {
-      width: min(24rem, 80%);
-      border-radius: 1.5rem;
-      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
-      animation: float 3s ease-in-out infinite;
-    }
+@keyframes fall{
+0%{transform:translateY(-100vh) rotate(0)}
+100%{transform:translateY(100vh) rotate(720deg)}
+}
 
-    .wishes {
-      display: grid;
-      gap: 1.5rem;
-    }
+@keyframes float{
+0%,100%{transform:translateY(0)}
+50%{transform:translateY(-20px)}
+}
 
-    .wish-card {
-      background: #fff;
-      border-radius: 1rem;
-      padding: 1.5rem;
-      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
-      border: 2px solid hsl(340, 40%, 85%);
-      cursor: default;
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
+@keyframes fadeUp{
+from{opacity:0;transform:translateY(30px)}
+to{opacity:1}
+}
 
-    .wish-card:hover {
-      transform: scale(1.05);
-      box-shadow: 0 15px 25px rgba(0,0,0,0.2);
-    }
+.translate{
+margin-top:30px;
+padding:10px 20px;
+background:#ff4da6;
+color:white;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
 
-    .wish-card p {
-      font-size: 1.125rem;
-      font-weight: 700;
-      line-height: 1.7;
-    }
+</style>
 
-    /* Translate button */
-
-    .translate-btn {
-      padding: 0.5rem 1rem;
-      margin-bottom: 2rem;
-      background: hsl(340,82%,55%);
-      color: #fff;
-      border: none;
-      border-radius: 0.5rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    .translate-btn:hover {
-      background: hsl(340,82%,40%);
-    }
-
-    .footer {
-      margin-top: 3rem;
-      font-size: 0.875rem;
-      color: hsl(340,30%,45%);
-    }
-
-    audio {
-      display: none;
-    }
-
-  </style>
 </head>
 
 <body>
 
-  <div class="confetti-container" id="confetti"></div>
+<div class="confetti" id="confetti"></div>
 
-  <div class="main">
+<!-- stage 1 -->
 
-    <h1 id="title">Happy Birthday! Rose 🎉</h1>
+<div class="stage active" id="stage1">
 
-    <p class="subtitle" id="subtitle">
-      Here are some wishes you probably don't deserve…
-    </p>
+<h1 class="intro-text">Hey Rose 👀</h1>
 
-    <button class="translate-btn" id="translateBtn">
-      Translate to Tamil
-    </button>
+<p>Something special is waiting for you...</p>
 
-    <div class="cake-wrapper">
-      <img
-        src="./ChatGPT Image Mar 11, 2026, 09_13_10 PM.png"
-        alt="Funny birthday cake"
-      />
-    </div>
+<button class="next-btn" onclick="nextStage()">Click Here</button>
 
-    <div class="wishes" id="wishes"></div>
+</div>
 
-    <p class="footer">Made with 🔥 by Rowdy</p>
+<!-- stage 2 -->
 
-  </div>
+<div class="stage" id="stage2">
 
-  <!-- Background Music -->
+<h1 class="intro-text">Today is your day 🎂</h1>
 
-  <audio id="bgMusic" autoplay loop muted>
-    <source src="en_rojaa_neeye.mp3" type="audio/mpeg">
-  </audio>
+<p>But first... some truth bombs 😏</p>
 
-<script>
+<button class="next-btn" onclick="nextStage()">Continue</button>
 
-window.addEventListener("load", () => {
+</div>
 
-  const audio = document.getElementById("bgMusic");
+<!-- stage 3 -->
 
-  audio.muted = false;
+<div class="stage" id="stage3">
 
-  audio.play().catch(() => {
+<h1 id="title">Happy Birthday Rose 🎉</h1>
 
-    document.body.addEventListener(
-      "click",
-      () => {
-        audio.play();
-      },
-      { once: true }
-    );
+<button class="translate" id="translateBtn">
+Translate to Tamil
+</button>
 
-  });
+<img class="cake" src="ChatGPT Image Mar 11, 2026, 09_13_10 PM.png">
 
-});
+<div class="wishes" id="wishes"></div>
 
-</script>
+</div>
 
+<audio id="music" autoplay loop muted>
+<source src="en_rojaa_neeye.mp3" type="audio/mpeg">
+</audio>
 
 <script>
 
-const wishes = [
+/* music autoplay fix */
 
-"Happy birthday! You're not old, you're just… vintage. Like cheese. Expensive and a little stinky. 🧀🎂",
+window.addEventListener("load",()=>{
 
-"Congrats on surviving another year without adult supervision! Proud of you. 🎉😂",
+const audio=document.getElementById("music")
 
-"They say with age comes wisdom… so where's yours hiding? Happy birthday! 🎈🤔",
+audio.muted=false
 
-"You're not getting older, you're just becoming a classic — like a car nobody can afford to fix. 🚗🎁",
+audio.play().catch(()=>{
+document.body.addEventListener("click",()=>audio.play(),{once:true})
+})
 
-"Happy birthday! May your hairline stay where it is for at least one more year. 🙏💇"
+})
 
-];
+/* stages */
 
+let stage=1
 
+function nextStage(){
 
-/* Improved Tamil */
+document.getElementById("stage"+stage).classList.remove("active")
 
-const wishesTamil = [
+stage++
 
-"பிறந்தநாள் வாழ்த்துகள்! நீ வயசாகவில்லை… vintage ஆகிறாய். சீஸ் மாதிரி — விலை உயர்ந்ததும் கொஞ்சம் வாசனையும். 🧀🎂",
-
-"பெரியவர்கள் கவனிக்காமல் இன்னொரு ஆண்டை கடந்து வந்ததுக்கு வாழ்த்துகள்! நீங்க ரொம்ப strong. 🎉😂",
-
-"வயசு கூடினால் ஞானம் வரும் என்று சொல்றாங்க… அது உங்கிட எங்கே மறைந்திருக்கிறது? 😆",
-
-"நீ வயசாகவில்லை… classic ஆகிறாய் — சரி செய்ய யாருக்கும் டைம் இல்லாத காரு மாதிரி. 🚗🎁",
-
-"பிறந்தநாள் வாழ்த்துகள்! உங்க hairline இன்னும் ஒரு வருடம் அப்படியே இருக்கட்டும். 🙏💇"
-
-];
-
-
-const rotations = [-2,1.5,-1,2,-1.5];
-
-const container = document.getElementById("wishes");
-
-
-function renderWishes(lang="en"){
-
-  container.innerHTML="";
-
-  const arr = lang==="en" ? wishes : wishesTamil;
-
-  arr.forEach((w,i)=>{
-
-    const card=document.createElement("div");
-
-    card.className="wish-card";
-
-    card.style.transform=`rotate(${rotations[i]}deg)`;
-
-    card.innerHTML=`<p>${w}</p>`;
-
-    container.appendChild(card);
-
-  });
+document.getElementById("stage"+stage).classList.add("active")
 
 }
 
-renderWishes();
+/* wishes */
 
+const wishes=[
 
-const translateBtn=document.getElementById("translateBtn");
+"Happy birthday! You're not old, you're just vintage. Like cheese. 🧀🎂",
 
-let isTamil=false;
+"Congrats on surviving another year without adult supervision! 🎉😂",
 
-translateBtn.addEventListener("click",()=>{
+"They say with age comes wisdom… so where's yours hiding? 🤔",
 
-  isTamil=!isTamil;
+"You're becoming a classic — like a car nobody can afford to fix. 🚗",
 
-  renderWishes(isTamil?"ta":"en");
+"Happy birthday! May your hairline stay where it is 🙏💇"
 
-  translateBtn.textContent=isTamil
-  ?"Translate to English"
-  :"Translate to Tamil";
+]
 
-  document.getElementById("title").textContent=isTamil
-  ?"பிறந்தநாள் வாழ்த்துகள்! 🎉"
-  :"Happy Birthday! 🎉";
+const tamil=[
 
-  document.getElementById("subtitle").textContent=isTamil
-  ?"இங்கே சில கலாய்ப்பு birthday wishes 😆"
-  :"Here are some wishes you probably don't deserve…";
+"பிறந்தநாள் வாழ்த்துகள்! நீ வயசாகவில்லை… vintage ஆகிறாய்.",
 
-});
+"மற்றொரு ஆண்டை பெரியவர்களின்றி கடந்து வந்ததற்கு வாழ்த்துகள் 😂",
 
+"வயசு கூடினால் ஞானம் வரும் என்று சொல்றாங்க… அது எங்கே?",
 
+"நீ classic ஆகிறாய் — சரி செய்ய யாருக்கும் டைம் இல்லாத காரு போல 🚗",
 
-/* Confetti */
+"உங்க hairline இன்னும் ஒரு வருடம் அப்படியே இருக்கட்டும் 🙏"
 
-const colors=[
-"hsl(340,82%,55%)",
-"hsl(200,80%,65%)",
-"hsl(48,100%,67%)",
-"hsl(150,60%,50%)",
-"hsl(280,70%,60%)"
-];
+]
 
-const confettiEl=document.getElementById("confetti");
+const container=document.getElementById("wishes")
 
-for(let i=0;i<50;i++){
+function render(arr){
 
-  const piece=document.createElement("div");
+container.innerHTML=""
 
-  piece.className="confetti-piece";
+arr.forEach(w=>{
 
-  const size=Math.random()*8+4;
+let card=document.createElement("div")
 
-  Object.assign(piece.style,{
+card.className="card"
 
-    left:Math.random()*100+"%",
+card.innerText=w
 
-    width:size+"px",
+container.appendChild(card)
 
-    height:size*1.5+"px",
+})
 
-    backgroundColor:colors[Math.floor(Math.random()*colors.length)],
+}
 
-    animationDelay:Math.random()*5+"s",
+render(wishes)
 
-    animationDuration:Math.random()*3+4+"s"
+/* translate */
 
-  });
+let tamilMode=false
 
-  confettiEl.appendChild(piece);
+document.getElementById("translateBtn").onclick=()=>{
+
+tamilMode=!tamilMode
+
+render(tamilMode?tamil:wishes)
+
+}
+
+/* confetti */
+
+const confetti=document.getElementById("confetti")
+
+for(let i=0;i<60;i++){
+
+let c=document.createElement("div")
+
+c.style.left=Math.random()*100+"%"
+
+c.style.background=`hsl(${Math.random()*360},80%,60%)`
+
+c.style.animationDuration=4+Math.random()*3+"s"
+
+confetti.appendChild(c)
 
 }
 
